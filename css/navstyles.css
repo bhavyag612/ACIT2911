@@ -4,7 +4,7 @@
     box-sizing: border-box;
     margin: 0; 
     padding: 0; 
-    background-color: #E86252;
+    /* background-color: #E86252; */
 }
 
 li, a, button {
@@ -13,6 +13,10 @@ li, a, button {
     font-size: 16px; 
     color: #edf0f1; 
     text-decoration: none; 
+}
+
+body {
+    background-color: #E86252;
 }
 
 nav {
