@@ -1,0 +1,21 @@
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeebd0;
+}
+.Add{
+    background-color:#EBB3A9;
+    padding: 20px;
+    border-radius: 20px;
+}
+.Add h1{
+    color: #74548c;
+}
+.Add button{
+    background-color: #74548c;
+}
+.form-groups{
+    padding: 5px;
+}
