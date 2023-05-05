@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-3">
+    <h1>Transaction Details</h1>
+    <table class="table table-striped">
+      <tbody>
+        <tr>
+          <th>Amount:</th>
+          <td>${{transaction.amt}}</td>
+        </tr>
+        <tr>
+          <th>Tag:</th>
+          <td>{{transaction.tag}}</td>
+        </tr>
+        <tr>
+          <th>Comment:</th>
+          <td>{{transaction.comment}}</td>
+        </tr>
+        <tr>
+          <th>Date:</th>
+          <td>{{transaction.trans_created}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <form action="{{url_for('delete_transaction',transaction_id=transaction.id)}}" method="post"><button class="btn btn-danger d-inline-block">Delete</button></form>
+    <a href="{{url_for('update_transaction',transaction_id=transaction.id)}}"><button class="btn btn-primary d-inline-block">Update</button></a>
+    <a href="{{url_for('user_main_page',user_id=user_id)}}"><button class="btn btn-primary d-inline-block">Back</button></a>
+  </div>  
+{% endblock %}

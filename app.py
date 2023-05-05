@@ -83,5 +83,13 @@ def add_transaction(account_id):
         db.session.commit()
         return redirect(url_for('user_main_page',user_id=user.id))
 
+#API to view a transaction
+@app.route('/<int:transaction_id>/view',methods=['GET'])
+def view_transaction(transaction_id):
+    transaction=Transaction.query.get(transaction_id)
+    account=Account.query.get(transaction.account_id)
+    user=User.query.get(account.user_id)
+    return render_template('view_transaction.html',transaction=transaction,user_id=user.id)
+
 if __name__ == "__main__":
     app.run(debug=True) #Starting the flask application
