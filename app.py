@@ -102,6 +102,32 @@ def delete_transaction(transaction_id):
     db.session.commit()
     return redirect(url_for("user_main_page",user_id=user.id))
 
+#API to update transaction
+@app.route("/<int:transaction_id>/update",methods=['POST','GET'])
+def update_transaction(transaction_id):
+    transaction=Transaction.query.get(transaction_id)
+    account=Account.query.get(transaction.account_id)
+    user=User.query.get(account.user_id)
+    if request.method=='GET':
+        return render_template('update_transaction.html',transaction=transaction,user_id=user.id)
+    else:
+        toggle=(request.form.get('toggle'))
+        amount=round(float(request.form.get('amount')),2)
+        tag=(request.form.get('category'))
+        comment=(request.form.get('comment'))
+        date=datetime.strptime((request.form.get('date')), '%Y-%m-%d').date()
+        account.amount-=transaction.amt
+        transaction.tag=tag
+        transaction.comment=comment
+        transaction.trans_created=date
+        if toggle=='income':
+            transaction.amt=amount
+        else:
+            transaction.amt=0-(amount)
+        account.amount+=transaction.amt
+        db.session.commit()
+        return redirect(url_for('user_main_page',user_id=user.id))
+
 
 if __name__ == "__main__":
     app.run(debug=True) #Starting the flask application

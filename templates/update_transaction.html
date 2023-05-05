@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Add a Transaction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+    integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    ></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Add a Transaction</h1>
+      <form action="{{ url_for('update_transaction',transaction_id=transaction.id) }}" method="post">
+        
+
+        <!-- Toggle for expense or income -->
+        <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+            {%if (transaction.amt<0)%}
+            <label class="btn btn-secondary active">
+                <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
+            </label>
+            <label class="btn btn-secondary">
+                <input type="radio" name="toggle" id="option2" autocomplete="off" value="income"> Income
+            </label>
+            {%else%}
+            <label class="btn btn-secondary">
+                <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense"> Expense
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="radio" name="toggle" id="option2" autocomplete="off" value="income" checked> Income
+            </label>
+            {%endif%}
+        </div>
+        
+        
+        <div class="gridbox">
+          <div class="input-text">
+        <!-- Input for amount -->
+            <div class="form-group">
+              <label for="amount">Amount</label>
+              {%if (transaction.amt<0)%}
+                <input type="number" class="form-control" value='{{0-(transaction.amt)}}'id="amount" name="amount" step='0.01' min='0.00'required>
+              {%else%}
+                <input type="number" class="form-control" value='{{(transaction.amt)}}'id="amount" name="amount" step='0.01' min='0.00'required>
+              {%endif%}
+            </div>
+      
+        <!-- Input for category -->
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control" value='{{transaction.tag}}'id="category" name="category" required>
+            </div>
+      
+        <!-- Input for comment -->
+            <div class="form-group">
+              <label for="comment">Comment</label>
+              <textarea class="form-control" id="comment" name="comment" rows="3">{{transaction.comment}}</textarea>
+            </div>
+          </div>
+          <div class="input-date">
+        <!-- Date input -->
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" name="date" value='{{transaction.trans_created}}' required>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{url_for('view_transaction',transaction_id=transaction.id)}}"><button type="button" formnovalidate class="btn btn-primary">Cancel</button></a>
+      </div>
+      </form>
+      
+    </div>
+  </body>
+  <script>
+    $(document).ready(function(){
+      $('input[type="radio"]').click(function(){
+        if($(this).attr("value")=="expense"){
+          $(".expense-form").show();
+          $(".income-form").hide();
+        }
+        if($(this).attr("value")=="income"){
+          $(".income-form").show();
+          $(".expense-form").hide();
+        }
+      });
+    });
+  </script>
+</html>
