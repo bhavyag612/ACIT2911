@@ -128,5 +128,6 @@ def update_transaction(transaction_id):
         db.session.commit()
         return redirect(url_for('user_main_page',user_id=user.id))
 
+
 if __name__ == "__main__":
     app.run(debug=True) #Starting the flask application
