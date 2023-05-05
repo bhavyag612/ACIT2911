@@ -50,6 +50,16 @@ def add_account(user_id):
         db.session.add(account)
         db.session.commit()
         return redirect(url_for('user_main_page',user_id=user_id))
-    
+
+#API to Delete Account
+@app.route('/<int:account_id>/delete',methods=['POST'])
+def delete_account(account_id):
+    account=Account.query.get(account_id)
+    user_id=account.user_id
+    db.session.delete(account)
+    db.session.commit()
+    return redirect(url_for('user_main_page',user_id=user_id))
+
+
 if __name__ == "__main__":
     app.run(debug=True) #Starting the flask application
