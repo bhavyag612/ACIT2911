@@ -28,5 +28,28 @@ def user_main_page(user_id):
         total_amount+=account.amount
     return render_template('transactions_home.html',user=user,total_amount=total_amount)
 
+#API to show transactions of individual accounts
+@app.route("/<int:user_id>/<int:account_id>",methods=["GET"])
+def user_account(user_id,account_id):
+    user=User.query.get(user_id)
+    return render_template('user_account.html',user=user,accountReq=account_id)
+
+#API to add an account
+@app.route("/<int:user_id>/addAccount",methods=['GET','POST'])
+def add_account(user_id):
+    if request.method=='GET':
+        return render_template('add_account.html',user_id=user_id)
+    else:
+        user=User.query.get(user_id)
+        account_name=(request.form.get('account_name'))  
+        initial_amount=(request.form.get('initial_amount'))
+        if initial_amount:
+            account=Account(name=account_name,amount=initial_amount,user_id=user.id)
+        else:
+            account=Account(name=account_name,user_id=user.id)
+        db.session.add(account)
+        db.session.commit()
+        return redirect(url_for('user_main_page',user_id=user_id))
+    
 if __name__ == "__main__":
     app.run(debug=True) #Starting the flask application
