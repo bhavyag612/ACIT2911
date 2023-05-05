@@ -60,6 +60,28 @@ def delete_account(account_id):
     db.session.commit()
     return redirect(url_for('user_main_page',user_id=user_id))
 
+#API to Add transaction
+@app.route("/<int:account_id>/addTansaction",methods=['POST','GET'])
+def add_transaction(account_id):
+    account=Account.query.get(account_id)
+    user=User.query.get(account.user_id)
+    if request.method=='GET':
+        return render_template('add_transaction.html',account_id=account_id,user_id=user.id)
+    else:
+        toggle=(request.form.get('toggle'))
+        amount=round(float(request.form.get('amount')),2)
+        tag=(request.form.get('category'))
+        comment=(request.form.get('comment'))
+        date=datetime.strptime((request.form.get('date')), '%Y-%m-%d').date()
+        
+        if toggle=='income':
+            transaction=Transaction(amt=amount,tag=tag,comment=comment,trans_created=date,account_id=account_id)
+        else:
+            transaction=Transaction(amt=-amount,tag=tag,comment=comment,trans_created=date,account_id=account_id)
+        account.amount+=transaction.amt
+        db.session.add(transaction)
+        db.session.commit()
+        return redirect(url_for('user_main_page',user_id=user.id))
 
 if __name__ == "__main__":
     app.run(debug=True) #Starting the flask application

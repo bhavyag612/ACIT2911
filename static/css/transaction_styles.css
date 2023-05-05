@@ -1,0 +1,21 @@
+body {
+    background-color: #eeebd0;
+}
+
+h1 {
+    color: #74548c;
+}
+
+.btn-secondary {
+    background-color: #ebb3a9;
+}
+
+.btn-primary {
+    background-color: #74548c;
+}
+
+.gridbox {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 10px
+}
