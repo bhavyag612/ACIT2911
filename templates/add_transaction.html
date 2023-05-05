@@ -8,7 +8,6 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="../css/styles.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -23,25 +22,7 @@
     ></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-    <style>
-      body {
-        background-color: #eeebd0;
-      }
-      h1 {
-        color: #74548c;
-      }
-      .btn-secondary {
-        background-color: #ebb3a9;
-      }
-      .btn-primary {
-        background-color: #74548c;
-      }
-      .gridbox{
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-        gap: 10px
-      }
-    </style>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
   </head>
   <body>
     <div class="container">
@@ -52,10 +33,10 @@
         <!-- Toggle for expense or income -->
         <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
             <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" value="expense" checked> Expense
+            <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
           </label>
           <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off" value="income"> Income
+            <input type="radio" name="toggle" id="option2" autocomplete="off" value="income"> Income
           </label>
         </div>
         
@@ -65,7 +46,7 @@
         <!-- Input for amount -->
             <div class="form-group">
               <label for="amount">Amount</label>
-              <input type="number" class="form-control" id="amount" name="amount" required>
+              <input type="number" class="form-control" id="amount" name="amount" step='0.01' min='0.00'required>
             </div>
       
         <!-- Input for category -->
@@ -90,9 +71,10 @@
         </div>
       
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+        <a href="{{url_for('user_main_page',user_id=user_id)}}"><button type='button'formnovalidate class="btn btn-primary">Cancel</button></a>
       </div>
-      </form>
+    </form>
       
     </div>
   </body>
