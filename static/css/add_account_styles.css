@@ -1,20 +1,24 @@
 body {
+    background-image: url("../images/background2.jpg");
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #eeebd0;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .Add {
-    background-color: #ebb3a9;
+    background-color: white;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 5px;
   }
   .Add h1 {
-    color: #74548c;
+    color: black;
   }
-  .Add button {
+  #Addbtn {
     background-color: #74548c;
+    color: white;
   }
   .form-groups {
     padding: 5px;
