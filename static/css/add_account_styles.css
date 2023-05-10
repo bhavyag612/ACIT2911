@@ -9,15 +9,16 @@ body {
     background-size: cover;
   }
   .Add {
-    background-color: #ebb3a9;
+    background-color: white;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 5px;
   }
   .Add h1 {
-    color: #74548c;
+    color: black;
   }
-  .Add button {
+  #Addbtn {
     background-color: #74548c;
+    color: white;
   }
   .form-groups {
     padding: 5px;
