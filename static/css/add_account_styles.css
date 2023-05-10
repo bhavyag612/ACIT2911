@@ -1,9 +1,12 @@
 body {
+    background-image: url("../images/background2.jpg");
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #eeebd0;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .Add {
     background-color: #ebb3a9;
