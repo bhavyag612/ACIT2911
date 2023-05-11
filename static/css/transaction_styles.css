@@ -1,13 +1,24 @@
+/* General CSS */
 body {
-    background-color: #eeebd0;
-}
+    background-image: url("../images/background4.jpg");
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white; 
+  }
 
 h1 {
-    color: #74548c;
+    color: white;
 }
 
+/* Transaction Styles */
+
 .btn-secondary {
-    background-color: #ebb3a9;
+    background-color: lightskyblue;
 }
 
 .btn-primary {
@@ -18,4 +29,48 @@ h1 {
     display: grid;
     grid-template-columns: 3fr 1fr;
     gap: 10px
+}
+  
+/* Add account styles  */
+.Add {
+    background: linear-gradient(135deg, rgba(243, 203, 234, 0.3), rgba(209, 10, 133, 0.3));
+    padding: 20px;
+    border-radius: 5px;
+}
+  
+.Add h1 {
+    color: white;
+}
+  
+#Addbtn {
+    background-color: #74548c;
+    color: white;
+}
+  
+.form-groups {
+    padding: 5px;
+}
+
+/* View transaction styles */
+.containermt-3 {
+    background: linear-gradient(135deg, rgba(243, 203, 234, 0.3), rgba(209, 10, 133, 0.3));
+    padding: 20px;
+    border-radius: 5px;
+}
+
+tbody {
+    color: white; 
+}
+
+tr th {
+    color: white;
+}
+
+tr td {
+    color: white; 
+}
+
+.buttonGroup {
+    display: inline-flex;
+    gap: 5px; 
 }
