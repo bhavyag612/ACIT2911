@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container mt-3">
+<div class="containermt-3">
     <h1>Transaction Details</h1>
     <table class="table table-striped">
       <tbody>
@@ -24,8 +24,13 @@
         </tr>
       </tbody>
     </table>
-    <form action="{{url_for('delete_transaction',transaction_id=transaction.id)}}" method="post"><button class="btn btn-danger d-inline-block">Delete</button></form>
-    <a href="{{url_for('update_transaction',transaction_id=transaction.id)}}"><button class="btn btn-primary d-inline-block">Update</button></a>
-    <a href="{{url_for('user_main_page',user_id=user_id)}}"><button class="btn btn-primary d-inline-block">Back</button></a>
+    <div class="buttonGroup">
+      <form action="{{url_for('delete_transaction',transaction_id=transaction.id)}}" method="post">
+        <button class="btn btn-danger d-inline-block" id="viewDelButton">Delete</button></form>
+      <a href="{{url_for('update_transaction',transaction_id=transaction.id)}}">
+        <button class="btn btn-primary d-inline-block" id="viewUpdateButton">Update</button></a>
+      <a href="{{url_for('user_main_page',user_id=user_id)}}">
+        <button class="btn btn-primary d-inline-block" id="viewBackButton">Back</button></a> 
+    </div>
   </div>  
 {% endblock %}
