@@ -132,3 +132,95 @@ def monthly_chart(account_id):
     account=db.session.get(Account,account_id)
     data_dict=account.to_dict()
     return render_template('monthly_chart.html',account=(data_dict))
+
+
+#API for Forecast expense and income
+@main.route("/<int:account_id>/forecast",methods=['GET','POST'])
+def monthly_forecast(account_id):
+    if request.method =='POST':
+        month=request.form.get('month')
+    else:
+        month=''
+    account=db.session.get(Account,account_id)
+    expense_dict={}
+    income_dict={}
+    for transaction in account.transactions:
+        if month in transaction.trans_created.strftime("%Y-%m-%d"):
+            if transaction.amt<0:
+                if transaction.trans_created in expense_dict:
+                    expense_dict[transaction.trans_created]+=transaction.amt
+                else:
+                    expense_dict[transaction.trans_created]=transaction.amt
+            else:
+                if transaction.trans_created in income_dict:
+                    income_dict[transaction.trans_created]+=transaction.amt
+                else:
+                    income_dict[transaction.trans_created]=transaction.amt
+    if len(expense_dict):
+        expense_list=list(expense_dict.values())
+        running_avg=[]
+        window=4
+        for i in range(0,len(expense_dict)-window):
+            subset= expense_list[i:i+window]
+            avg=sum(subset)/window
+            running_avg.append(avg)
+        maxDate=(max(expense_dict.keys()))
+        year=maxDate.year
+        month=maxDate.month
+        day=maxDate.day
+        days_in_month = calendar.monthrange(year, month)[1]
+        for i in range(day,days_in_month):
+            maxDate+=timedelta(days=1)
+            prediction=round((sum(expense_list[-(window-1):])+running_avg[-1])/window,2)
+            expense_dict[maxDate]=prediction
+            expense_list.append(prediction)
+            subset= expense_list[-window:]
+            avg=sum(subset)/window
+            running_avg.append(avg)
+        new_exp_dict = {}
+        for key, value in expense_dict.items():
+            new_key = key.strftime("%Y-%m-%d")
+            new_exp_dict[new_key] = 0-value
+        #######################################################
+        income_list=list(income_dict.values())
+        income_keys=list(income_dict.keys())
+        running_avg=[]
+        window=2
+        for i in range(0,len(income_dict)-window):
+            subset= income_list[i:i+window]
+            avg=sum(subset)/window
+            running_avg.append(avg)
+        maxDate=(max(income_dict.keys()))
+        year=maxDate.year
+        month=maxDate.month
+        day=maxDate.day
+        diff=0
+        for i in range(0,len(income_dict)-1):
+            diff+=(income_keys[i+1].day)-(income_keys[i].day)
+        diff=diff//(len(income_dict)-1)
+        days_in_month = calendar.monthrange(year, month)[1]
+        for i in range(day,days_in_month):
+            maxDate+=timedelta(days=diff)
+            if maxDate.month>month:
+                break
+            prediction=round((sum(income_list[-(window-1):])+running_avg[-1])/window,2)
+            income_dict[maxDate]=prediction
+            income_list.append(prediction)
+            subset= income_list[-window:]
+            avg=sum(subset)/window
+            running_avg.append(avg)
+        for i in range(0,len(expense_dict)-1):
+            if (list(expense_dict.keys()))[i] in income_dict:
+                continue
+            else:
+                income_dict[list(expense_dict.keys())[i]]=0
+        sorted_income_dict = dict(sorted(income_dict.items(), key=lambda x: x[0]))
+        new_income_dict = {}
+        for key, value in sorted_income_dict.items():
+            new_key = key.strftime("%Y-%m-%d")
+            new_income_dict[new_key] = value
+        
+        profitLoss=round(sum(list(new_exp_dict.values()))-sum(list(new_income_dict.values())),2)
+        return render_template('forecast.html',expense_dict=new_exp_dict,income_dict=new_income_dict,account_id=account.id,profitLoss=profitLoss)
+    else:
+        return render_template('forecast.html',expense_dict={},income_dict={},account_id=account.id)
