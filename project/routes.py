@@ -33,7 +33,7 @@ def add_account(user_id):
         if request.method=='GET':
             return render_template('add_account.html',user_id=user_id)
         else:
-            user=User.query.get(user_id)
+            user=db.session.get(User,user_id)
             account_name=(request.form.get('account_name'))  
             initial_amount=(request.form.get('initial_amount'))
             if account_name:
