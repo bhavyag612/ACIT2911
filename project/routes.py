@@ -126,3 +126,9 @@ def update_transaction(transaction_id):
         db.session.commit()
         return redirect(url_for('main.user_main_page',user_id=user.id))
 
+#API to add chart view
+@main.route("/<int:account_id>/monthly_chart",methods=['GET'])
+def monthly_chart(account_id):
+    account=db.session.get(Account,account_id)
+    data_dict=account.to_dict()
+    return render_template('monthly_chart.html',account=(data_dict))
