@@ -1,5 +1,16 @@
 {% extends "base.html" %} {% block content %}
 <style>
+  body {
+    background-image: url("{{url_for('static',filename='images/background2.jpg')}}");
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white; 
+  }
   label {
     display: block;
     font: 1rem "Fira Sans", sans-serif;
@@ -42,5 +53,5 @@ const datain={
 }
 
 </script>
-<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+<script src="{{ url_for('static', filename='js/forecastChart.js') }}"></script>
 {% endblock %}

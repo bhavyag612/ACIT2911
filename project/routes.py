@@ -144,6 +144,9 @@ def monthly_forecast(account_id):
     account=db.session.get(Account,account_id)
     expense_dict={}
     income_dict={}
+    new_exp_dict={}
+    new_income_dict={}
+    profitLoss=0
     for transaction in account.transactions:
         if month in transaction.trans_created.strftime("%Y-%m-%d"):
             if transaction.amt<0:
@@ -156,7 +159,7 @@ def monthly_forecast(account_id):
                     income_dict[transaction.trans_created]+=transaction.amt
                 else:
                     income_dict[transaction.trans_created]=transaction.amt
-    if len(expense_dict):
+    if len(expense_dict)>4:
         expense_list=list(expense_dict.values())
         running_avg=[]
         window=4
@@ -182,6 +185,7 @@ def monthly_forecast(account_id):
             new_key = key.strftime("%Y-%m-%d")
             new_exp_dict[new_key] = 0-value
         #######################################################
+    if len(income_dict)>2:
         income_list=list(income_dict.values())
         income_keys=list(income_dict.keys())
         running_avg=[]
@@ -197,7 +201,6 @@ def monthly_forecast(account_id):
         diff=0
         for i in range(0,len(income_dict)-1):
             diff+=(income_keys[i+1].day)-(income_keys[i].day)
-        diff=diff//(len(income_dict)-1)
         days_in_month = calendar.monthrange(year, month)[1]
         for i in range(day,days_in_month):
             maxDate+=timedelta(days=diff)
@@ -219,8 +222,5 @@ def monthly_forecast(account_id):
         for key, value in sorted_income_dict.items():
             new_key = key.strftime("%Y-%m-%d")
             new_income_dict[new_key] = value
-        
-        profitLoss=round(sum(list(new_exp_dict.values()))-sum(list(new_income_dict.values())),2)
-        return render_template('forecast.html',expense_dict=new_exp_dict,income_dict=new_income_dict,account_id=account.id,profitLoss=profitLoss)
-    else:
-        return render_template('forecast.html',expense_dict={},income_dict={},account_id=account.id)
+    profitLoss=round(sum(list(new_exp_dict.values()))-sum(list(new_income_dict.values())),2)
+    return render_template('forecast.html',expense_dict=new_exp_dict,income_dict=new_income_dict,account_id=account.id,profitLoss=profitLoss)

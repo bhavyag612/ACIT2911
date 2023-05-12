@@ -1,5 +1,16 @@
 {% extends "base.html" %} {% block content %}
 <style>
+  body {
+    background-image: url("{{url_for('static',filename='images/background2.jpg')}}");
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: white; 
+  }
   label {
     display: block;
     font: 1rem "Fira Sans", sans-serif;
@@ -29,6 +40,7 @@
   flex: 1;
   margin-left: 20px;
 }
+
 </style>
 <div class="container mt-3">
     <div class="left">
@@ -86,7 +98,8 @@ let endDate;
       const weekNumber = (week.value.substring(6, 8));
       const startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7)
       account_data.transactions.forEach(function(transaction) {
-          if (transaction.date_created.includes(month.value)) {
+        trans_date=new Date(transaction.date_created)
+          if (trans_date.toISOString().includes(month.value)) {
               if (transaction.amt < 0) {
                   if (transaction.tag in monthkeyvalues) {
                       monthkeyvalues[transaction.tag] += transaction.amt;
@@ -107,7 +120,7 @@ let endDate;
                   }
               }
           }
-          if(transaction.date_created === day.value){
+          if(trans_date.toISOString().includes(day.value)){
             if (transaction.amt < 0) {
                   if (transaction.tag in daykeyvalues) {
                       daykeyvalues[transaction.tag] += transaction.amt;
