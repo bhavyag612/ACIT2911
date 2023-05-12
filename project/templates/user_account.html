@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_home_styles.css')}}" />
+    <title>Spondulix | Account</title>
+  </head>
+  <body>
+    <aside>
+    <header><img class="aside_logo" src="{{ url_for('static', filename='images/logoblank.png')}}" alt="Spundolix Logo" /></header>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="div-button">
+          <a href="{{ url_for('main.user_main_page', user_id=user.id) }}" class="nav-link link-dark" aria-current="page" style="font-weight: bold;">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+            Main
+          </a>
+        </li>
+        {%for account in user.accounts%}
+        <li class="div-button">
+          <a href="{{url_for('main.user_account', user_id=user.id, account_id=account.id)}}" class="nav-link {%if account.id==accountReq%}active link-dark{%endif%} link-dark" style="font-weight: bold;">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+            {{account.name}}
+          </a>
+        </li>
+        {% endfor%}
+        <li class="div-button">
+          <a href="{{url_for('main.add_account',user_id=user.id)}}" class="nav-link link-dark" aria-current="page" style="font-weight: bold;">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+            + Add Account
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <main>
+      <img class="logo_main" src="{{ url_for('static', filename='images/logoblank.png')}}" alt="Spundolix Logo" /></header>
+      <p class="copyright">Copyright © 2023</p>
+      {%for account in user.accounts%}
+      {%if account.id==accountReq%}
+      <div class="container">
+        <div class="box">
+          <h2 style="display: inline-block; margin-right: 10px;">{{account.name}} Balance:</h2>
+          <p class="total-amount" style="display: inline-block; margin-right: 10px;">$ {{account.amount|round(2)}}</p>
+          <form action="{{ url_for('main.delete_account', account_id=account.id) }}" method="post" class="d-inline-block ms-2">
+            <button class="btn btn-danger">Delete</button>
+          </form>
+          <a href="{{url_for('main.add_transaction',account_id=account.id)}}" class="d-inline-block ms-2"><button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C; ">Add Transaction</button></a>
+          <a href="{{url_for('main.monthly_chart',account_id=account.id)}}" class="d-inline-block ms-2"><button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C; ">Charts</button></a>
+          <a href="{{url_for('main.monthly_forecast',account_id=account.id)}}" class="d-inline-block ms-2"><button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C; ">forecast</button></a>
+        </div>
+         
+            {%for transaction in account.transactions%}
+            <div class="box transaction">
+              <div class="d-flex justify-content-between align-items-center">
+                  <p><strong>{{transaction.tag}}:</strong> {{transaction.amt|round(2)}} dollars</p>
+                  <div class="d-flex">
+                      <form action="{{url_for('main.delete_transaction',transaction_id=transaction.id)}}" method="post" class="me-2">
+                          <button class="btn btn-danger">Delete</button>
+                      </form>
+                      <a href="{{url_for('main.view_transaction',transaction_id=transaction.id)}}">
+                          <button class="btn btn-primary ">View</button>
+                      </a>
+                  </div>
+          </div>
+          </div>
+            {% endfor %}
+          {%endif%}
+        {%endfor%}
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+  </body>
+</html>
+
+

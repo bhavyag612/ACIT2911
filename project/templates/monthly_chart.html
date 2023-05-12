@@ -1,0 +1,148 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  label {
+    display: block;
+    font: 1rem "Fira Sans", sans-serif;
+  }
+
+  input,
+  label {
+    margin: 0.4rem 0;
+  }
+  .container {
+  display: flex;
+  background-color: rgba(0,0,0,0.50);
+  height: 500px;
+  flex-wrap: wrap;
+}
+
+.left {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.right {
+  flex: 1;
+  margin-left: 20px;
+}
+.middle {
+  flex: 1;
+  margin-left: 20px;
+}
+</style>
+<div class="container mt-3">
+    <div class="left">
+      <label for="month">Select month:</label>
+      <input type="month" id="month" name="month" />
+      <button id="btn-month">View</button>
+      <canvas id="myChart" style="width: 100%; max-width: 700px; height:70%;"></canvas>
+    </div>
+    <div class="middle">
+      <label for="week">Select week:</label>
+      <input type="week" id="week" name="week" />
+      <button id="btn-week">View</button>
+      <canvas id="myChartWeek" style="width: 100%; max-width: 700px;height:70%;"></canvas>
+    </div>
+    <div class="right">
+      <label for="day">Select day:</label>
+      <input type="date" id="day" name="day" />
+      <button id="btn-day">View</button>
+      <canvas id="myChartDay" style="width: 100%; max-width: 700px;height:70%;"></canvas>
+    </div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+
+const monthBtn = document.getElementById('btn-month');
+const weekBtn = document.getElementById('btn-week');
+const dayBtn = document.getElementById('btn-day');
+const month = document.getElementById('month');
+const week = document.getElementById('week');
+const day = document.getElementById('day');
+const account_data = {{ account|tojson }}
+let endDate;
+
+  let keyvalues = {};
+  const barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#fc8d62",
+      "#c6e2ff",
+      "#f5deb3",
+      "#d2b4de",
+      "#4b0082",
+      "#dda0dd",
+      "#7b68ee",
+      "#1e7145"
+  ];
+ 
+  function updateChartData() {
+      monthkeyvalues = {};
+      weekkeyvalues={};
+      daykeyvalues={};
+      const year = (week.value.substring(0, 4));
+      const weekNumber = (week.value.substring(6, 8));
+      const startDate = new Date(year, 0, 1 + (weekNumber - 1) * 7)
+      account_data.transactions.forEach(function(transaction) {
+          if (transaction.date_created.includes(month.value)) {
+              if (transaction.amt < 0) {
+                  if (transaction.tag in monthkeyvalues) {
+                      monthkeyvalues[transaction.tag] += transaction.amt;
+                  } else {
+                      monthkeyvalues[transaction.tag] = transaction.amt;
+                  }
+              }
+          }
+          const formatDate= new Date(transaction.date_created)
+          var endDate=new Date(startDate)
+          endDate.setDate(startDate.getDate() + 7);
+          if(formatDate>startDate && formatDate<=endDate){
+            if (transaction.amt < 0) {
+                  if (transaction.tag in weekkeyvalues) {
+                      weekkeyvalues[transaction.tag] += transaction.amt;
+                  } else {
+                      weekkeyvalues[transaction.tag] = transaction.amt;
+                  }
+              }
+          }
+          if(transaction.date_created === day.value){
+            if (transaction.amt < 0) {
+                  if (transaction.tag in daykeyvalues) {
+                      daykeyvalues[transaction.tag] += transaction.amt;
+                  } else {
+                      daykeyvalues[transaction.tag] = transaction.amt;
+                  }
+              }
+          }
+      });
+      monthly.data.labels = Object.keys(monthkeyvalues);
+      monthly.data.datasets[0].data = Object.values(monthkeyvalues).map(val => 0 - val);
+      monthly.update();
+      weekly.data.labels = Object.keys(weekkeyvalues);
+      weekly.data.datasets[0].data = Object.values(weekkeyvalues).map(val => 0 - val);
+      weekly.update();
+      daily.data.labels = Object.keys(daykeyvalues);
+      daily.data.datasets[0].data = Object.values(daykeyvalues).map(val => 0 - val);
+      daily.update();
+  }
+
+  const data = {
+      xValues: Object.keys(keyvalues),
+      yValues: Object.values(keyvalues).map(val => 0 - val),
+      barColors: barColors
+  };
+  
+  monthBtn.addEventListener('click', () => {
+        updateChartData();
+    });
+  weekBtn.addEventListener('click', () => {
+        updateChartData();
+    });
+  dayBtn.addEventListener('click', () => {
+        updateChartData();
+    });
+</script>
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+{% endblock %}

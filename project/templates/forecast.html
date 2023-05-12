@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block content %}
+<style>
+  label {
+    display: block;
+    font: 1rem "Fira Sans", sans-serif;
+  }
+
+  input,
+  label {
+    margin: 0.4rem 0;
+  }
+  .container {
+
+  background-color: rgba(0,0,0,0.50);
+  height: 500px;
+}
+
+</style>
+<div class="container mt-3">
+    <form action="{{url_for('main.monthly_forecast',account_id=account_id)}}" method="post">
+      <label for="month">Select month:</label>
+      <input type="month" id="month" name="month" />
+      <button id="btn-month" type="submit">View</button>
+    </form>
+    <canvas id="forecast" style="width: 100%; max-width: 700px; height:70%;"></canvas>
+    <h3>Predicted profit or loss: {{profitLoss}}</h3>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+
+const monthBtn = document.getElementById('btn-month');
+const month = document.getElementById('month');
+const expense_d = {{ expense_dict|tojson }}
+const income_d = {{ income_dict|tojson }}
+const data={
+    xValues: Object.keys(expense_d),
+    yValues: Object.values(expense_d)
+}
+const datain={
+    xValues: Object.keys(income_d),
+    yValues: Object.values(income_d)
+}
+
+</script>
+<script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+{% endblock %}

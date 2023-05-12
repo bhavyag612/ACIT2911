@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
+    <title>Add New Account</title>
+  </head>
+  <body>
+    <div class="Add">
+      <h1>Add a New Account</h1>
+      <form action="{{url_for('main.add_account',user_id=user_id)}}" method="post">
+        <div class="form-groups">
+          <input
+            class="form-control"
+            type="text"
+            id="account_name"
+            name="account_name"
+            placeholder="Account name"
+            required
+          />
+        </div>
+        <div class="form-groups">
+          <input
+            class="form-control"
+            type="number"
+            step="0.01"
+            id="initial_amount"
+            name="initial_amount"
+            placeholder="Initial Amount"
+          />
+        </div>
+        <div class="form-groups">            
+          <button type='submit'id="Addbtn" class="btn btn-block">Add</button>
+        </div>
+        <div class="form-groups">
+          <a href="{{url_for('main.user_main_page',user_id=user_id)}}">
+          <button id="Cancelbtn" type='button'formnovalidate class="btn btn-block btn-outline-danger">Cancel</button>
+        </a>    
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
