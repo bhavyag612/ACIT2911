@@ -52,6 +52,9 @@
             <button class="btn btn-danger">Delete</button>
           </form>
           <a href="{{url_for('main.add_transaction',account_id=account.id)}}" class="d-inline-block ms-2"><button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C; ">Add Transaction</button></a>
+          <a href="{{url_for('main.monthly_chart',account_id=account.id)}}" class="d-inline-block ms-2"><button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C; ">Charts</button></a>
+          <a href="{{url_for('main.monthly_forecast',account_id=account.id)}}" class="d-inline-block ms-2"><button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C; ">forecast</button></a>
+        
         </div>
          
             {%for transaction in account.transactions%}
