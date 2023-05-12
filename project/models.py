@@ -1,5 +1,5 @@
 
-from database import db
+from .database import db
 from sqlalchemy.sql import func
 from flask_login import UserMixin
 from datetime import date
@@ -22,6 +22,15 @@ class Account(db.Model):
     transactions = db.relationship('Transaction', backref='account', cascade='all,delete')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, index=True)
 
+    def to_dict(self):
+        transaction_list=[{"amt":transaction.amt,"tag":transaction.tag,"date_created":transaction.trans_created}for transaction in self.transactions]
+        account_dict={
+            "id":self.id,
+            "name":self.name,
+            "amount":self.amount,
+            "transactions":transaction_list
+        }
+        return account_dict
     def __str__(self):
         return f'<Account(id="{self.id}", name="{self.name}", amount="{self.amount}", date_added="{self.date_added}")>'
 
