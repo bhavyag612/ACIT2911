@@ -135,12 +135,10 @@ def monthly_chart(account_id):
 
 
 #API for Forecast expense and income
-@main.route("/<int:account_id>/forecast",methods=['GET','POST'])
+@main.route("/<int:account_id>/forecast",methods=['GET'])
 def monthly_forecast(account_id):
-    if request.method =='POST':
-        month=request.form.get('month')
-    else:
-        month=''
+    now = datetime.now()
+    month = now.strftime("%Y-%m")
     account=db.session.get(Account,account_id)
     expense_dict={}
     income_dict={}
@@ -185,6 +183,7 @@ def monthly_forecast(account_id):
             new_key = key.strftime("%Y-%m-%d")
             new_exp_dict[new_key] = 0-value
         #######################################################
+    print(income_dict)
     if len(income_dict)>2:
         income_list=list(income_dict.values())
         income_keys=list(income_dict.keys())
@@ -222,5 +221,8 @@ def monthly_forecast(account_id):
         for key, value in sorted_income_dict.items():
             new_key = key.strftime("%Y-%m-%d")
             new_income_dict[new_key] = value
-    profitLoss=round(sum(list(new_exp_dict.values()))-sum(list(new_income_dict.values())),2)
+    if len(new_exp_dict)==0 or len(new_income_dict)==0:
+        profitLoss='Insufficient data'
+    else:
+        profitLoss=round(sum(list(new_exp_dict.values()))-sum(list(new_income_dict.values())),2)
     return render_template('forecast.html',expense_dict=new_exp_dict,income_dict=new_income_dict,account_id=account.id,profitLoss=profitLoss)
