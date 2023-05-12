@@ -18,21 +18,21 @@
     <header><img class="aside_logo" src="{{ url_for('static', filename='images/logoblank.png')}}" alt="Spundolix Logo" /></header>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="div-button">
-          <a href="{{ url_for('user_main_page', user_id=1) }}" class="nav-link active" aria-current="page" style="font-weight: bold;">
+          <a href="{{ url_for('main.user_main_page', user_id=1) }}" class="nav-link active" aria-current="page" style="font-weight: bold;">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
             Main
           </a>
         </li>
         {%for account in user.accounts%}
         <li class="div-button">
-          <a href="{{url_for('user_account', user_id=user.id, account_id=account.id)}}" class="nav-link link-dark" style="font-weight: bold;">
+          <a href="{{url_for('main.user_account', user_id=user.id, account_id=account.id)}}" class="nav-link link-dark" style="font-weight: bold;">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
             {{account.name}}
           </a>
         </li>
         {% endfor%}
         <li class="div-button">
-          <a href="{{url_for('add_account',user_id=user.id)}}" class="nav-link link-dark" aria-current="page" style="font-weight: bold;">
+          <a href="{{url_for('main.add_account',user_id=user.id)}}" class="nav-link link-dark" aria-current="page" style="font-weight: bold;">
             <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
             + Add Account
           </a>
@@ -53,10 +53,10 @@
             <div class="d-flex justify-content-between align-items-center">
               <p><strong>{{ account.name }}</strong> || Current Balance: {{ account.amount|round(2) }} dollars</p>
               <div class="d-flex">
-                <form action="{{ url_for('delete_account', account_id=account.id) }}" method="post" class="me-2">
+                <form action="{{ url_for('main.delete_account', account_id=account.id) }}" method="post" class="me-2">
                   <button class="btn btn-danger">Delete</button>
                 </form>
-                <a href="{{ url_for('add_transaction', account_id=account.id) }}">
+                <a href="{{ url_for('main.add_transaction', account_id=account.id) }}">
                   <button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C;">Add Transaction</button>
                 </a>
               </div>

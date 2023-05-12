@@ -27,7 +27,7 @@
   <body>
     <div class="Add">
       <h1>Add a Transaction</h1>
-      <form action="{{ url_for('add_transaction',account_id=account_id) }}" method="post">
+      <form action="{{ url_for('main.add_transaction',account_id=account_id) }}" method="post">
         
 
         <!-- Toggle for expense or income -->
@@ -101,7 +101,7 @@
       
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary">Add</button>
-        <a href="{{url_for('user_main_page',user_id=user_id)}}"><button type='button'formnovalidate class="btn btn-primary">Cancel</button></a>
+        <a href="{{url_for('main.user_main_page',user_id=user_id)}}"><button type='button'formnovalidate class="btn btn-primary">Cancel</button></a>
       </div>
     </form>
       

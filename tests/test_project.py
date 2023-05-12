@@ -1,6 +1,8 @@
 from project.models import User
 from project.database import db
-
+def test_home(client):
+    response=client.get("/")
+    assert b'<title>Spondulix</title>' in response.data
 
 def test_add_account_OK(client,app,new_user,populated_db):
     with app.app_context():
