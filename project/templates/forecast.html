@@ -28,11 +28,6 @@
 
 </style>
 <div class="container mt-3">
-    <form action="{{url_for('main.monthly_forecast',account_id=account_id)}}" method="post">
-      <label for="month">Select month:</label>
-      <input type="month" id="month" name="month" />
-      <button id="btn-month" type="submit">View</button>
-    </form>
     <canvas id="forecast" style="width: 100%; max-width: 700px; height:70%;"></canvas>
     <h3>Predicted profit or loss: {{profitLoss}}</h3>
   </div>
