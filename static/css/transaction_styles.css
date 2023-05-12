@@ -46,6 +46,7 @@ h1 {
     background-color: #74548c;
     color: white;
 }
+
   
 .form-groups {
     padding: 5px;
@@ -74,3 +75,5 @@ tr td {
     display: inline-flex;
     gap: 5px; 
 }
+
+  

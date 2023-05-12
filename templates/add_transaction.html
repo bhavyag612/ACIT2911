@@ -32,10 +32,10 @@
 
         <!-- Toggle for expense or income -->
         <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
-            <label class="btn btn-secondary active">
-            <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
-          </label>
-          <label class="btn btn-secondary">
+            <label class="btn btn-secondary active expensebtn">
+              <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
+            </label>
+          <label class="btn btn-secondary incomebtn">
             <input type="radio" name="toggle" id="option2" autocomplete="off" value="income"> Income
           </label>
         </div>
@@ -50,10 +50,39 @@
             </div>
       
         <!-- Input for category -->
-            <div class="form-group">
-              <label for="category">Category</label>
-              <input type="text" class="form-control" id="category" name="category" required>
-            </div>
+        <!-- Toggle for expense or income -->
+        <div class="btn-group btn-group-toggle mb-3 expense-tags" data-toggle="buttons">
+          <label for="remove-element" class="btn btn-secondary">
+            <input type="radio" name="toggle" id="foodbtn" autocomplete="off" value="food" checked> Food
+          </label>
+          <label for="remove-element" class="btn btn-secondary">
+            <input type="radio" name="toggle" id="transportationbtn" autocomplete="off" value="transportation"> Transportation
+          </label>
+          <label for="remove-element" class="btn btn-secondary">
+            <input type="radio" name="toggle" id="homebtn" autocomplete="off" value="home"> Home
+          </label>
+          <label for="remove-element" class="btn btn-secondary">
+            <input type="radio" name="toggle" id="healthbtn" autocomplete="off" value="health"> Health
+          </label>
+          <label class="btn btn-secondary active">
+            <input type="radio" name="toggle" id="otherbtn" autocomplete="off" value="other"> Other
+          </label>
+        </div>
+
+        <div class="btn-group btn-group-toggle mb-3 income-tags" data-toggle="buttons">
+          <label class="btn btn-secondary">
+            <input class="paycheck_btn" type="radio" name="toggle" id="foodbtn" autocomplete="off" value="food" checked> Paycheck
+          </label>
+          <label class="btn btn-secondary">
+            <input class="gift_btn" type="radio" name="toggle" id="transportationbtn" autocomplete="off" value="transportation"> Gift
+          </label>
+          <label class="btn btn-secondary">
+            <input class="interest_btn" type="radio" name="toggle" id="homebtn" autocomplete="off" value="home"> Interest
+          </label>
+          <label class="btn btn-secondary active">
+            <input class="other_btn" type="radio" name="toggle" id="otherbtn" autocomplete="off" value="other"> Other
+          </label>
+        </div>
       
         <!-- Input for comment -->
             <div class="form-group">
@@ -77,7 +106,9 @@
     </form>
       
     </div>
+    <script src="/static/js/add_transaction_js.js"></script>
   </body>
+  
   <script>
     $(document).ready(function(){
       $('input[type="radio"]').click(function(){
