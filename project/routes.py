@@ -68,7 +68,7 @@ def add_transaction(account_id):
     else:
         toggle=(request.form.get('toggle'))
         amount=round(float(request.form.get('amount')),2)
-        tag=(request.form.get('category'))
+        tag=(request.form.get('tag'))
         comment=(request.form.get('comment'))
         date=datetime.strptime((request.form.get('date')), '%Y-%m-%d').date()
         
