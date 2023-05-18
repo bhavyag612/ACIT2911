@@ -44,9 +44,15 @@
       <p class="copyright">Copyright © 2023</p>
       <div class="container">
         <div class="box">
-          <h2 style="display: inline-block; margin-right: 10px;">Total Balance:</h2>
-          <p class="total-amount"style="display: inline-block; margin-right: 10px;">$ {{total_amount|round(2)}}</p>
-          
+          <div class="d-flex justify-content-between align-items-center">
+            <h2 style="display: inline-block; margin-right: 10px;">Total Balance:
+            <p class="total-amount"style="display: inline-block; margin-right: 10px;">$ {{total_amount|round(2)}}</p></h2>
+            <div class="d-flex">
+              <a href="{{ url_for('main.user_chart', user_id=user.id) }}">
+                <button class="btn btn-primary" style="background-color: #74548C; border-color: #74548C;">Expense chart</button>
+              </a>
+            </div>
+          </div>
         </div>
         {%for account in user.accounts%}
         <div class="box transaction">
