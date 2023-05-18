@@ -89,7 +89,20 @@ let endDate;
       "#7b68ee",
       "#1e7145"
   ];
- 
+  function defaultValue(){
+    currentDate=new Date()
+    startDate = new Date(currentDate.getFullYear(), 0, 1);
+    var days = Math.floor((currentDate - startDate) /
+        (24 * 60 * 60 * 1000));     
+    var dateWeek = Math.ceil(days / 7);
+    var currentMonth=("0" + (currentDate.getMonth() + 1)).slice(-2)
+    var currentDay=("0" + currentDate.getDate()).slice(-2)
+    month.value=`${currentDate.getFullYear()}-${currentMonth}`
+    week.value=`${currentDate.getFullYear()}-W${dateWeek}`
+    day.value=`${currentDate.getFullYear()}-${currentMonth}-${currentDay}`
+    updateChartData()
+  }
+
   function updateChartData() {
       monthkeyvalues = {};
       weekkeyvalues={};
