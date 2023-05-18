@@ -160,15 +160,12 @@ let endDate;
       barColors: barColors
   };
   
-  monthBtn.addEventListener('click', () => {
-        updateChartData();
-    });
-  weekBtn.addEventListener('click', () => {
-        updateChartData();
-    });
-  dayBtn.addEventListener('click', () => {
-        updateChartData();
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+    defaultValue();
+    monthBtn.addEventListener('click', updateChartData);
+    weekBtn.addEventListener('click', updateChartData);
+    dayBtn.addEventListener('click', updateChartData);
+  });
 </script>
 <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
 {% endblock %}
