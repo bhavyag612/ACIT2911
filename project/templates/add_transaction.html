@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Update a Transaction</title>
+    <title>Add a Transaction</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -11,43 +11,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-    
+
     <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
-    integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+      integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     ></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
     <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
   </head>
   <body>
     <div class="Add">
-      <h1>Update Your Transaction</h1>
-      <form action="{{ url_for('main.update_transaction',transaction_id=transaction.id) }}" method="post">
+      <h1>Add a Transaction</h1>
+      <form action="{{ url_for('main.add_transaction',account_id=account_id) }}" method="post">
         
 
         <!-- Toggle for expense or income -->
         <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
-            {%if (transaction.amt<0)%}
-            <label id="expenseBTN" class="btn btn-secondary active">
-                <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
+            <label class="btn btn-secondary active expensebtn">
+              <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
             </label>
-            <label id="incomeBTN" class="btn btn-secondary">
-                <input type="radio" name="toggle" id="option2" autocomplete="off" value="income"> Income
-            </label>
-            {%else%}
-            <label id="expenseBTN" class="btn btn-secondary">
-                <input  type="radio" name="toggle" id="option1" autocomplete="off" value="expense"> Expense
-            </label>
-            <label id="incomeBTN"class="btn btn-secondary active">
-                <input type="radio" name="toggle" id="option2" autocomplete="off" value="income" checked> Income
-            </label>
-            {%endif%}
+          <label class="btn btn-secondary incomebtn">
+            <input type="radio" name="toggle" id="option2" autocomplete="off" value="income"> Income
+          </label>
         </div>
         
         
@@ -56,14 +46,11 @@
         <!-- Input for amount -->
             <div class="form-group">
               <label for="amount">Amount</label>
-              {%if (transaction.amt<0)%}
-                <input type="number" class="form-control" value='{{0-(transaction.amt)}}'id="amount" name="amount" step='0.01' min='0.00'required>
-              {%else%}
-                <input type="number" class="form-control" value='{{(transaction.amt)}}'id="amount" name="amount" step='0.01' min='0.00'required>
-              {%endif%}
+              <input type="number" class="form-control" id="amount" name="amount" step='0.01' min='0.00'required>
             </div>
       
         <!-- Input for category -->
+        <!-- Toggle for expense or income -->
         <div class="btn-group btn-group-toggle mb-3 expense-tags" data-toggle="buttons">
           <label for="remove-element" class="btn btn-secondary">
             <input type="radio" name="tag" id="foodbtn" autocomplete="off" value="Food" checked> Food
@@ -100,27 +87,28 @@
         <!-- Input for comment -->
             <div class="form-group">
               <label for="comment">Comment</label>
-              <textarea class="form-control" id="comment" name="comment" rows="3">{{transaction.comment}}</textarea>
+              <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
             </div>
           </div>
           <div class="input-date">
         <!-- Date input -->
             <div class="form-group">
               <label for="date">Date</label>
-              <input type="date" class="form-control" id="date" name="date" value='{{transaction.trans_created}}' required>
+              <input type="date" class="form-control" id="date" name="date" value='' required>
             </div>
           </div>
         </div>
       
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{url_for('main.view_transaction',transaction_id=transaction.id)}}"><button type="button" formnovalidate class="btn btn-primary">Cancel</button></a>
+        <button type="submit" class="btn btn-primary">Add</button>
+        <a href="{{url_for('main.user_main_page',user_id=user_id)}}"><button type='button'formnovalidate class="btn btn-primary">Cancel</button></a>
       </div>
-      </form>
+    </form>
       
     </div>
-    <script src="/static/js/update_transaction_js.js"></script>
+    <script src="/static/js/add_transaction_js.js"></script>
   </body>
+  
   <script>
     $(document).ready(function(){
       $('input[type="radio"]').click(function(){
@@ -134,5 +122,7 @@
         }
       });
     });
+    var today = new Date().toISOString().substr(0, 10);
+    document.getElementById("date").value = today;
   </script>
 </html>
