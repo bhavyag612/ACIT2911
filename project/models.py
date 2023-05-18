@@ -10,6 +10,16 @@ class User(db.Model, UserMixin):
     name=db.Column(db.String,nullable=False)
     password=db.Column(db.String,nullable=False)
     accounts = db.relationship('Account', backref='user')
+    def to_dict(self):
+        transaction_list=[]
+        for account in self.accounts:
+            transaction_list+=[{"id":transaction.id,"amt":transaction.amt,"tag":transaction.tag,"date_created":transaction.trans_created}for transaction in account.transactions]
+        user_dict={
+            "id":self.id,
+            "name":self.name,
+            "transactions":transaction_list
+        }
+        return user_dict
 
     def __str__(self):
         return f'<User(id="{self.id}", email="{self.email}", name="{self.name}")>'

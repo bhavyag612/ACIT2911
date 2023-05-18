@@ -132,6 +132,11 @@ def monthly_chart(account_id):
     account=db.session.get(Account,account_id)
     data_dict=account.to_dict()
     return render_template('monthly_chart.html',account=(data_dict))
+@main.route("/<int:user_id>/charts",methods=['GET'])
+def user_chart(user_id):
+    user=db.session.get(User,user_id)
+    data_dict=user.to_dict() 
+    return render_template('monthly_chart.html',account=(data_dict))
 
 
 #API for Forecast expense and income
