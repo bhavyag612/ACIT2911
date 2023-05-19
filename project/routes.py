@@ -13,6 +13,27 @@ from flask_login import login_user, login_required, logout_user, current_user
 def home():
     return render_template('homepage.html')
 
+#API call for login_page
+@main.route("/login",methods=['GET','POST'])
+def login():
+    if request.method=='POST':
+        email=(request.form.get('email')).lower()
+        password=request.form.get('password')
+        user=User.query.filter_by(email=email).first()
+        if user:
+            valid_password = check_password_hash(user.password, password)
+            print(password)
+            if valid_password:
+                login_user(user,remember=False)
+                return redirect(url_for('main.user_main_page',user_id=user.id))
+            else:
+                
+                return 'Wrong password'
+        else:
+            return 'wrong email'
+    return render_template("login.html")
+
+
 #API to show the user homepage after clicking the login button
 @main.route("/<int:user_id>",methods=["GET"])
 @login_required
