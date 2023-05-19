@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/homestyles.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/homestyles.css')}}" />
     <script src="scripts/scripts.js" defer></script>
     <title>Spondulix</title>
 </head>
@@ -20,32 +20,28 @@
     </nav> -->
     
     <section>
-        <a href="homepage.html"><img class = "logo" src="../images/logoblank.png" alt="Spondulix Logo"></a>
+        <a href="{{url_for('main.home')}}"><img class = "logo" src='{{url_for("static",filename="/images/logoblank.png")}} 'alt="Spondulix Logo"></a>
         <div class="container">
-            <form action="">
+            <form action="{{url_for('main.signup')}}" method="post">
                 <h1>Welcome to Spondulix</h1>
                 <div class="form-group">
                     <label for="">First Name</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="">Last Name</label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" class="form-control" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" class="form-control" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" class="form-control" required>
+                    <input type="password" class="form-control" name="password" required>
                 </div>
                 <div class="form-group">
                     <label for="">Confirm Password</label>
-                    <input type="password" class="form-control" required>
+                    <input type="password" class="form-control" name="confirm-password" required>
                 </div>
                 <input type="submit" class="btn" value="Submit">
-                <p>Already have an account? <a href="login.html">Log In</a></p>
+                <p>Already have an account? <a href="{{url_for('main.login')}}">Log In</a></p>
             </form>
         </div>
     </section>
