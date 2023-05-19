@@ -48,6 +48,16 @@ def signup():
         return redirect(url_for('main.user_main_page',user_id=user.id))
     return render_template('signup.html')
 
+#API call to logout user
+@main.route('/logout/<int:user_id>',methods=['GET'])
+@login_required
+def logout(user_id):
+    if current_user.id==user_id:
+        logout_user()
+        return redirect(url_for('main.login'))
+    else:
+        return redirect(url_for('main.user_main_page',user_id=user_id))
+
 
 #API to show the user homepage after clicking the login button
 @main.route("/<int:user_id>",methods=["GET"])
