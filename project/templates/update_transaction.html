@@ -125,5 +125,22 @@
         }
       });
     });
+    const expenseBtn = document.querySelector('.expensebtn');
+    const incomeBtn = document.querySelector('.incomebtn');
+    const expenseTags = document.querySelector('.expense-tags');
+    const incomeTags = document.querySelector('.income-tags');
+
+    // Function to handle the display of tags
+    expenseBtn.addEventListener('click', () => {
+      // Show the expense tag section and hide the income tag section
+      expenseTags.style.display = 'flex';
+      incomeTags.style.display = 'none';
+    });
+
+    incomeBtn.addEventListener('click', () => {
+      // Show the income tag section and hide the expense tag section
+      incomeTags.style.display = 'flex';
+      expenseTags.style.display = 'none';
+    });
   </script>
 </html>

@@ -170,7 +170,7 @@ def delete_transaction(transaction_id):
         account.amount -= transaction.amt
         db.session.delete(transaction)
         db.session.commit()
-        return redirect("main.user_account",user_id=user.id,account_id=account.id)
+        return redirect(url_for("main.user_account",user_id=user.id,account_id=account.id))
     else:
         return redirect(url_for('main.user_main_page',user_id=current_user.id))
 
