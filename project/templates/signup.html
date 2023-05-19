@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static',filename='css/homestyles.css')}}" />
-    <script src="scripts/scripts.js" defer></script>
     <title>Spondulix</title>
 </head>
 <body>
@@ -25,25 +24,47 @@
             <form action="{{url_for('main.signup')}}" method="post">
                 <h1>Welcome to Spondulix</h1>
                 <div class="form-group">
-                    <label for="">First Name</label>
-                    <input type="text" class="form-control" name="name" required>
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" name="name" id="'name" required>
                 </div>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" class="form-control" name="email" required>
+                    <input type="text" class="form-control" name="email" id="email" required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" class="form-control" name="password" required>
+                    <input type="password" class="form-control" name="password" id="password"required>
                 </div>
                 <div class="form-group">
                     <label for="">Confirm Password</label>
-                    <input type="password" class="form-control" name="confirm-password" required>
+                    <input type="password" class="form-control" name="confirm-password" id="confirmPassword" required>
                 </div>
-                <input type="submit" class="btn" value="Submit">
+                <input type="button" id='submitBtn' class="btn" value="Submit">
                 <p>Already have an account? <a href="{{url_for('main.login')}}">Log In</a></p>
             </form>
         </div>
     </section>
 </body>
+<script>
+    const submitBtn=document.getElementById('submitBtn')
+    const email= document.getElementById('email')
+    const password= document.getElementById('password')
+    const confirmPass= document.getElementById('confirmPassword')
+    submitBtn.addEventListener('click',()=>{
+        console.log(password.value,confirmPass.value)
+        if (password.value===confirmPass.value){
+            if(email.value.includes('@')){
+                document.querySelector('form').submit();
+            }
+            else{
+                alert('Invalid email format');
+                window.location.reload()
+            }
+        }
+        else{
+            alert('Re-entered password does not match the password');
+            window.location.reload()
+        }
+    })
+</script>
 </html>
