@@ -33,6 +33,21 @@ def login():
             return 'wrong email'
     return render_template("login.html")
 
+#API call for signup
+@main.route('/signup',methods=['GET','POST'])
+def signup():
+    if request.method=='POST':
+        email=request.form.get('email')
+        password=request.form.get('password')
+        name=request.form.get('name')
+        hashed_password=generate_password_hash(password,method='sha256')
+        user=User(name=name,email=email,password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user,remember=False)
+        return redirect(url_for('main.user_main_page',user_id=user.id))
+    return render_template('signup.html')
+
 
 #API to show the user homepage after clicking the login button
 @main.route("/<int:user_id>",methods=["GET"])
