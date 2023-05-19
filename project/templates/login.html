@@ -42,25 +42,24 @@
                 </div>
             </form>
         </div> -->
-        <a href="homepage.html"><img class = "logo" src="{{url_for('static',filename='images/logoblank.png')}}" alt="Spondulix Logo"></a>
+        <a href="{{url_for('main.home')}}"><img class = "logo" src="{{url_for('static',filename='images/logoblank.png')}}" alt="Spondulix Logo"></a>
         <div class="container">
-            <form action="{{url_for('main.user_main_page',user_id=1)}}">
+            <form action="{{url_for('main.login')}}" method="post">
                 <h1>Login to Spondulix</h1>
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" class="form-control" name='email' required>
                 </div>
                 <div class="form-group">
                     <label for="">Password</label>
-                    <input type="password" class="form-control" required>
-                    <label for=""><input type="checkbox">Remember Me</label>
+                    <input type="password" class="form-control" name="password" required>
                 </div>
                 <input type="submit" class="btn" value="Login">
                 <div clas="forget">
                     <a href="#">Forgot Password</a>
                 </div>
                 <div class="register">
-                    <p>Don't have an account <a href="signup.html">Register</a></p>
+                    <p>Don't have an account <a href="{{url_for('main.signup')}}">Register</a></p>
                 </div>
             </form>
         </div>
