@@ -22,6 +22,7 @@
     ></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="{{url_for('static',filename='js/add_transaction_js.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
     <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
   </head>
@@ -33,6 +34,7 @@
 
         <!-- Toggle for expense or income -->
         <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+<<<<<<< HEAD
             {%if (transaction.amt<0)%}
             <label id="expenseBTN" class="btn btn-secondary active">
                 <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
@@ -48,6 +50,14 @@
                 <input type="radio" name="toggle" id="option2" autocomplete="off" value="income" checked> Income
             </label>
             {%endif%}
+=======
+            <label class="btn btn-secondary {% if transaction.amt < 0 %}active {% endif%}expensebtn">
+                <input type="radio" name="toggle" id="option1" autocomplete="off" value="expense" checked> Expense
+            </label>
+            <label class="btn btn-secondary {% if transaction.amt > 0 %}active {% endif%}incomebtn">
+                <input type="radio" name="toggle" id="option2" autocomplete="off" value="income"> Income
+            </label>
+>>>>>>> 91c4ef544e7f9fc5576f1204935707fdc5f8f3c4
         </div>
         
         
@@ -63,6 +73,7 @@
               {%endif%}
             </div>
       
+<<<<<<< HEAD
         <!-- Input for category -->
         <div class="btn-group btn-group-toggle mb-3 expense-tags" data-toggle="buttons">
           <label for="remove-element" class="btn btn-secondary">
@@ -78,10 +89,28 @@
             <input type="radio" name="tag" id="healthbtn" autocomplete="off" value="Health"> Health
           </label>
           <label class="btn btn-secondary active">
+=======
+        <!-- Toggle for category -->
+        <div class="btn-group btn-group-toggle mb-3 expense-tags" {% if transaction.amt<0 %} style="display:flex;" {% else %} style="display:none;" {% endif %} data-toggle="buttons">
+          <label for="remove-element" class="btn btn-secondary {% if transaction.tag=='Food' %}active {% endif%}">
+            <input type="radio" name="tag" id="foodbtn" autocomplete="off" value="Food" checked> Food
+          </label>
+          <label for="remove-element" class="btn btn-secondary {% if transaction.tag == 'Transportation' %}active {% endif%}">
+            <input type="radio" name="tag" id="transportationbtn" autocomplete="off" value="Transportation"> Transportation
+          </label>
+          <label for="remove-element" class="btn btn-secondary {% if transaction.tag == 'home' %}active {% endif%}">
+            <input type="radio" name="tag" id="homebtn" autocomplete="off" value="Home"> Home
+          </label>
+          <label for="remove-element" class="btn btn-secondary {% if transaction.tag == 'Health' %}active {% endif%}">
+            <input type="radio" name="tag" id="healthbtn" autocomplete="off" value="Health"> Health
+          </label>
+          <label class="btn btn-secondary {% if transaction.amt<0 and transaction.tag == 'Other'%}active {% endif%}">
+>>>>>>> 91c4ef544e7f9fc5576f1204935707fdc5f8f3c4
             <input type="radio" name="tag" id="otherbtn" autocomplete="off" value="Other"> Other
           </label>
         </div>
 
+<<<<<<< HEAD
         <div class="btn-group btn-group-toggle mb-3 income-tags" data-toggle="buttons">
           <label class="btn btn-secondary">
             <input class="paycheck_btn" type="radio" name="tag" id="foodbtn" autocomplete="off" value="Paycheck" checked> Paycheck
@@ -93,6 +122,19 @@
             <input class="interest_btn" type="radio" name="tag" id="homebtn" autocomplete="off" value="Interest"> Interest
           </label>
           <label class="btn btn-secondary active">
+=======
+        <div class="btn-group btn-group-toggle mb-3 income-tags" {% if transaction.amt>0 %} style="display:flex;" {% else %} style="display:none;" {% endif %} data-toggle="buttons">
+          <label class="btn btn-secondary {% if transaction.tag == 'Paycheck' %}active {% endif%}">
+            <input class="paycheck_btn" type="radio" name="tag" id="foodbtn" autocomplete="off" value="Paycheck" checked> Paycheck
+          </label>
+          <label class="btn btn-secondary {% if transaction.tag == 'Gift' %}active {% endif%}">
+            <input class="gift_btn" type="radio" name="tag" id="transportationbtn" autocomplete="off" value="Gift"> Gift
+          </label>
+          <label class="btn btn-secondary {% if transaction.tag == 'Interest' %}active {% endif%}">
+            <input class="interest_btn" type="radio" name="tag" id="homebtn" autocomplete="off" value="Interest"> Interest
+          </label>
+          <label class="btn btn-secondary active {% if transaction.tag == 'Other' and transaction.amt>0 %}active {% endif%}">
+>>>>>>> 91c4ef544e7f9fc5576f1204935707fdc5f8f3c4
             <input class="other_btn" type="radio" name="tag" id="otherbtn" autocomplete="off" value="Other"> Other
           </label>
         </div>
@@ -121,6 +163,7 @@
     </div>
     <script src="/static/js/update_transaction_js.js"></script>
   </body>
+  
   <script>
     $(document).ready(function(){
       $('input[type="radio"]').click(function(){
@@ -133,6 +176,23 @@
           $(".expense-form").hide();
         }
       });
+    });
+    const expenseBtn = document.querySelector('.expensebtn');
+    const incomeBtn = document.querySelector('.incomebtn');
+    const expenseTags = document.querySelector('.expense-tags');
+    const incomeTags = document.querySelector('.income-tags');
+
+    // Function to handle the display of tags
+    expenseBtn.addEventListener('click', () => {
+      // Show the expense tag section and hide the income tag section
+      expenseTags.style.display = 'flex';
+      incomeTags.style.display = 'none';
+    });
+
+    incomeBtn.addEventListener('click', () => {
+      // Show the income tag section and hide the expense tag section
+      incomeTags.style.display = 'flex';
+      expenseTags.style.display = 'none';
     });
   </script>
 </html>

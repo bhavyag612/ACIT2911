@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/homestyles.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/homestyles.css')}}" />
 
     <title>Spondulix</title>
 </head>
@@ -21,11 +21,11 @@
     </nav> -->
 
     <section>
-        <img class = "logo" src="../static/images/logoblank.png" alt="Spondulix Logo">
+        <img class = "logo" src='{{url_for("static",filename="/images/logoblank.png")}} ' alt="Spondulix Logo">
 
         <div class="buttons">
-            <a href="login.html" class="button">Log In</a>
-            <a href="signup.html" class="button">Sign Up</a>
+            <a href="{{url_for('main.login')}}" class="button">Log In</a>
+            <a href="{{url_for('main.signup')}}" class="button">Sign Up</a>
         </div>
     </section>
 </body>

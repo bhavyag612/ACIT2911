@@ -22,7 +22,7 @@
     ></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
-    <link rel="stylesheet" href="{{url_for('static',filename='css/transaction_styles.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='/css/transaction_styles.css')}}" />
   </head>
   <body>
     <div class="Add">
@@ -106,7 +106,7 @@
     </form>
       
     </div>
-    <script src="/static/js/add_transaction_js.js"></script>
+    <script src="{{url_for('static',filename='js/add_transaction_js.js')}}"></script>
   </body>
   
   <script>

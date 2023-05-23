@@ -40,6 +40,7 @@ body {
   background-image: url("../images/background2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   width: 100%;
   background-position: center;
   font-family: sans-serif;
@@ -158,4 +159,13 @@ main{
 
 .transaction .amount {
   color: black;
+}
+
+.logoutBtn{
+  position: absolute;
+  bottom: 20px; /* Adjust the value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #74548C; 
+  border-color: #74548C;
 }

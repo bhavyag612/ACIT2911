@@ -37,6 +37,11 @@
             + Add Account
           </a>
         </li>
+        <li class="div-button">
+          <a href="{{url_for('main.logout',user_id=user.id)}}">
+            <button class="btn btn-primary logoutBtn">Logout</button>
+          </a>
+        </li>
       </ul>
     </aside>
     <main>
