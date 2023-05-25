@@ -12,7 +12,7 @@
   options: {
     title: {
       display: true,
-      text: "Expenses"
+      text: opt
     }
   }
 });
@@ -28,7 +28,7 @@
   options: {
     title: {
       display: true,
-      text: "Expenses"
+      text: opt
     }
   }
 });
@@ -44,7 +44,7 @@
   options: {
     title: {
       display: true,
-      text: "Expenses"
+      text: opt
     }
   }
 });
