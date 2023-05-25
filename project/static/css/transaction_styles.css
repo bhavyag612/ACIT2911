@@ -1,6 +1,6 @@
 /* General CSS */
 body {
-    background-image: url("../images/background4.jpg");
+    background-image: url("../images/background_add_transaction.png");
     height: 100vh;
     display: flex;
     align-items: center;
@@ -18,11 +18,11 @@ h1 {
 /* Transaction Styles */
 
 .btn-secondary {
-    background-color: lightskyblue;
+    background-color: purple;
 }
 
 .btn-primary {
-    background-color: #74548c;
+    background-color: purple;
 }
 
 .gridbox {
