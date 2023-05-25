@@ -42,7 +42,11 @@
 }
 
 </style>
-<div class="container mt-3">
+<div class="button-container" style="padding-top: 20px;">
+  <button id="expenses" class="btn btn-primary" style="background-color: #74548C; border-color: #74548C;">Expenses</button>
+  <button id="income" class="btn btn-primary" style="background-color: #74548C; border-color: #74548C;">Income</button>
+</div>
+<div class="container mt-3" id="Charts">
     <div class="left">
       <label for="month">Select month:</label>
       <input type="month" id="month" name="month" />
@@ -71,7 +75,10 @@ const dayBtn = document.getElementById('btn-day');
 const month = document.getElementById('month');
 const week = document.getElementById('week');
 const day = document.getElementById('day');
-const account_data = {{ account|tojson }}
+const incomeBtn = document.getElementById('income');
+const expenseBtn = document.getElementById('expenses');
+const account_data = {{ account|tojson }};
+let opt= 'Expenses';
 let endDate;
 
   let keyvalues = {};
@@ -102,7 +109,7 @@ let endDate;
     day.value=`${currentDate.getFullYear()}-${currentMonth}-${currentDay}`
     updateChartData()
   }
-
+  
   function updateChartData() {
       monthkeyvalues = {};
       weekkeyvalues={};
@@ -113,6 +120,7 @@ let endDate;
       account_data.transactions.forEach(function(transaction) {
         trans_date=new Date(transaction.date_created)
           if (trans_date.toISOString().includes(month.value)) {
+            if(opt==='Expenses'){
               if (transaction.amt < 0) {
                   if (transaction.tag in monthkeyvalues) {
                       monthkeyvalues[transaction.tag] += transaction.amt;
@@ -120,35 +128,70 @@ let endDate;
                       monthkeyvalues[transaction.tag] = transaction.amt;
                   }
               }
+            }
+          else{
+            if (transaction.amt > 0) {
+                if (transaction.tag in monthkeyvalues) {
+                    monthkeyvalues[transaction.tag] += 0-transaction.amt;
+                } else {
+                    monthkeyvalues[transaction.tag] = 0-transaction.amt;
+                }
+            }
+            }
           }
           const formatDate= new Date(transaction.date_created)
           var endDate=new Date(startDate)
           endDate.setDate(startDate.getDate() + 7);
           if(formatDate>startDate && formatDate<=endDate){
-            if (transaction.amt < 0) {
-                  if (transaction.tag in weekkeyvalues) {
-                      weekkeyvalues[transaction.tag] += transaction.amt;
-                  } else {
-                      weekkeyvalues[transaction.tag] = transaction.amt;
+            if (opt==='Expenses'){
+              if (transaction.amt < 0) {
+                    if (transaction.tag in weekkeyvalues) {
+                        weekkeyvalues[transaction.tag] += transaction.amt;
+                    } else {
+                        weekkeyvalues[transaction.tag] = transaction.amt;
+                    }
+                }
+              }
+              else{
+                if (transaction.amt > 0) {
+                      if (transaction.tag in weekkeyvalues) {
+                          weekkeyvalues[transaction.tag] += 0-transaction.amt;
+                      } else {
+                          weekkeyvalues[transaction.tag] = 0-transaction.amt;
+                      }
                   }
               }
           }
           if(trans_date.toISOString().includes(day.value)){
-            if (transaction.amt < 0) {
-                  if (transaction.tag in daykeyvalues) {
-                      daykeyvalues[transaction.tag] += transaction.amt;
-                  } else {
-                      daykeyvalues[transaction.tag] = transaction.amt;
+            if(opt==='Expenses'){
+              if (transaction.amt < 0) {
+                    if (transaction.tag in daykeyvalues) {
+                        daykeyvalues[transaction.tag] += transaction.amt;
+                    } else {
+                        daykeyvalues[transaction.tag] = transaction.amt;
+                    }
                   }
               }
+            else{
+              if (transaction.amt > 0) {
+                    if (transaction.tag in daykeyvalues) {
+                        daykeyvalues[transaction.tag] += 0-transaction.amt;
+                    } else {
+                        daykeyvalues[transaction.tag] = 0-transaction.amt;
+                    }
+                }
+            }
           }
       });
+      monthly.options.title.text=opt
       monthly.data.labels = Object.keys(monthkeyvalues);
       monthly.data.datasets[0].data = Object.values(monthkeyvalues).map(val => 0 - val);
       monthly.update();
+      weekly.options.title.text=opt
       weekly.data.labels = Object.keys(weekkeyvalues);
       weekly.data.datasets[0].data = Object.values(weekkeyvalues).map(val => 0 - val);
       weekly.update();
+      daily.options.title.text=opt
       daily.data.labels = Object.keys(daykeyvalues);
       daily.data.datasets[0].data = Object.values(daykeyvalues).map(val => 0 - val);
       daily.update();
@@ -162,6 +205,14 @@ let endDate;
   
   document.addEventListener('DOMContentLoaded', function () {
     defaultValue();
+    incomeBtn.addEventListener('click',()=>{
+      opt='Income';
+      updateChartData();
+    })
+    expenseBtn.addEventListener('click',()=>{
+      opt='Expenses';
+      updateChartData();
+    })
     monthBtn.addEventListener('click', updateChartData);
     weekBtn.addEventListener('click', updateChartData);
     dayBtn.addEventListener('click', updateChartData);
