@@ -102,7 +102,7 @@ def add_account(user_id):
                     raise ValueError
                 db.session.add(account)
                 db.session.commit()
-                return redirect(url_for('main.user_main_page',user_id=user_id)),200
+                return redirect(url_for('main.user_main_page',user_id=user_id))
         except:
             return 'Sorry there was an error',404
     else:

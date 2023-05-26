@@ -19,7 +19,7 @@ def test_add_account_OK(client,app,new_user,populated_db):
             acc1=client.post(f"/{new_user.id}/addAccount",data={"account_name":"Scotia","initial_amount":100})
             acc2=client.post(f"/{new_user.id}/addAccount",data={"account_name":"Scotia"})
 
-            assert acc2.status_code==200
+            assert acc2.status_code==302
             assert len(user.accounts) == 2
             for account in user.accounts:
                 assert account.amount >=0
