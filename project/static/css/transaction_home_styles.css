@@ -27,7 +27,7 @@ header img {
   padding: 15px;
 }
 .active{
-  background-color: #EBB3A9 !important;
+  background-color: rgba(223, 177, 205, 0.6) !important;
 }
 
 button img {
@@ -56,7 +56,7 @@ aside {
   float: left;
   position: fixed;
   width: 15%;
-  background: linear-gradient(135deg, rgba(153, 175, 221, 0.5), rgba(223, 177, 205, 0.6));
+  background: linear-gradient(135deg, rgba(153, 175, 221, 0.5), #74548C);
   padding: 20px;
   height: 100vh;
 }
