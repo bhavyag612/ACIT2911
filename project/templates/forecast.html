@@ -1,32 +1,5 @@
 {% extends "base.html" %} {% block content %}
-<style>
-  body {
-    background-image: url("{{url_for('static',filename='images/background2.jpg')}}");
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    color: white; 
-  }
-  label {
-    display: block;
-    font: 1rem "Fira Sans", sans-serif;
-  }
 
-  input,
-  label {
-    margin: 0.4rem 0;
-  }
-  .container {
-
-  background-color: rgba(0,0,0,0.50);
-  height: 500px;
-}
-
-</style>
 <div class="container mt-3">
     <canvas id="forecast" style="width: 100%; max-width: 700px; height:70%;"></canvas>
     <h3>Predicted profit or loss: {{profitLoss}}</h3>
@@ -34,18 +7,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script>
 
-const monthBtn = document.getElementById('btn-month');
-const month = document.getElementById('month');
+
 const expense_d = {{ expense_dict|tojson }}
 const income_d = {{ income_dict|tojson }}
-const data={
-    xValues: Object.keys(expense_d),
-    yValues: Object.values(expense_d)
-}
-const datain={
-    xValues: Object.keys(income_d),
-    yValues: Object.values(income_d)
-}
+
 
 </script>
 <script src="{{ url_for('static', filename='js/forecastChart.js') }}"></script>
