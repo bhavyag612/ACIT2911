@@ -1,3 +1,13 @@
+const data={
+  xValues: Object.keys(expense_d),
+  yValues: Object.values(expense_d)
+}
+const datain={
+  xValues: Object.keys(income_d),
+  yValues: Object.values(income_d)
+}
+const monthBtn = document.getElementById('btn-month');
+const month = document.getElementById('month');
 forecast=new Chart("forecast", {
     type: "line",
     data: {

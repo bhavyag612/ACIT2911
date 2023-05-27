@@ -76,4 +76,34 @@ tr td {
     gap: 5px; 
 }
 
+
+  label {
+    display: block;
+    font: 1rem "Fira Sans", sans-serif;
+  }
+
+  input,
+  label {
+    margin: 0.4rem 0;
+  }
+  .container .mt-3{
+  background-color: rgba(0,0,0,0.50);
+  height: 500px;
+}
+.month{
+    flex-wrap:wrap;
+    display:flex;
+}
+.left {
+    flex: 1;
+    margin-right: 20px;
+  }
   
+  .right {
+    flex: 1;
+    margin-left: 20px;
+  }
+  .middle {
+    flex: 1;
+    margin-left: 20px;
+  }
